@@ -19,6 +19,12 @@ app.get('/', function(request, response){
   response.render('index');
 });
 
+app.get('/pizzas/:id', function(request, response){
+  var pizza = app.locals.pizzas[request.params.id];
+
+  response.render('pizza', { pizza: pizza });
+});
+
 app.post('/pizzas', function(request, response){
   var id = generateId();
   app.locals.pizzas[id] = request.body;

@@ -79,5 +79,27 @@ describe('Server', function() {
         done();
       });
     });
+    it('should return a page that has the title of the pizza', function(done) {
+      var pizza = app.locals.pizzas.testPizza;
+
+      this.request.get('/pizzas/testPizza', function(error, response) {
+        if (error) { done(error); }
+        assert(response.body.includes(pizza.name),
+          response.body + ' does not include ' + pizza.name + ' .');
+        done();
+      });
+    });
+    it('the toppings of a requested pizza displayed', function(done) {
+      var pizza = app.locals.pizzas.testPizza;
+
+      this.request.get('/pizzas/testPizza', function(error, response) {
+        if (error) { done(error); }
+        pizza.toppings.forEach(function(topping){
+          assert(response.body.includes(topping),
+            response.body + ' does not include ' + topping + ' .');
+        });
+        done();
+      });
+    });
   });
 });
